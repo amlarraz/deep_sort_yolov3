@@ -55,7 +55,7 @@ def main(yolo):
         t1 = time.time()
 
         image = Image.fromarray(frame)
-        boxs = yolo.detect_image(image)
+        boxs, pred_class = yolo.detect_image(image)
        # print("box_num",len(boxs))
         features = encoder(frame,boxs)
         
@@ -92,7 +92,7 @@ def main(yolo):
             list_file.write(str(frame_index)+' ')
             if len(boxs) != 0:
                 for i in range(0,len(boxs)):
-                    list_file.write(str(boxs[i][0]) + ' '+str(boxs[i][1]) + ' '+str(boxs[i][2]) + ' '+str(boxs[i][3]) + ' ')
+                    list_file.write(pred_class+' '+str(boxs[i][0]) + ' '+str(boxs[i][1]) + ' '+str(boxs[i][2]) + ' '+str(boxs[i][3]) + ' ')
             list_file.write('\n')
             
         fps  = ( fps + (1./(time.time()-t1)) ) / 2
